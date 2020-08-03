@@ -22,6 +22,8 @@ sum_number_of_household=sum(number_of_household)
 
 set.seed(1)
 individual_number=rpois(sum_number_of_household,1)+1
+set.seed(1)
+plot(density(rpois(sum_number_of_household,1)))
 
 individual=NULL
 i=1
@@ -450,6 +452,56 @@ write.csv(data_7,"selected_sub_cohort")
 ## vusulaization
 
 ```{r}
-finite_pop[which(finite_pop$stype==1 & finite_pop$enumeration==1),]
+i=1
+for(i in 1:strata){
+  a=tail(unique(finite_pop[which(finite_pop$stype==i),2:3])$enumeration,1)
+  print(a)
+}
+
+i=1
+j=1
+a=NULL
+for (i in 1:strata) {
+  for (j in 1:n_strata[i]) {
+    a=c(a,tail(unique(finite_pop[which(finite_pop$stype==i & finite_pop$enumeration==j),2:4])$household,1))
+  }
+}
+
+plot(density(a))
+
+plot(density(unique(finite_pop[,c(2,3,4,17)])$num_indiv))
+
+i=1
+for(i in 1:strata){
+  a=nrow(unique(selected_data_4[which(selected_data_4$stype==i),2:3]))
+  print(a)
+}
+
+
+i=1
+j=1
+a=NULL
+for (i in 1:strata) {
+  for(j in 1:n[i]){
+    a=c(a,length(unique(selected_data_4[which(selected_data_4$stype==i & selected_data_4$enumeration==selected_num[[i]][j]),4])))
+  }
+   
+}
+
+data_8=unique(selected_data_4[,c(2,3,4,28)])
+sum(data_8[which(data_8$enumeration==2 & data_8$stype==1),]$response_household)/nrow(data_8[which(data_8$enumeration==2 & data_8$stype==1),])
+
+i=1
+j=1
+a=NULL
+for (i in 1:strata) {
+  for(j in 1:n[i]){
+    data_8=unique(selected_data_4[,c(2,3,4,28)])
+    a=c(a,sum(data_8[which(data_8$enumeration==selected_num[[i]][j] & data_8$stype==i),]$response_household)/nrow(data_8[which(data_8$enumeration==selected_num[[i]][j] & data_8$stype==i),])
+)
+  }
+}
+
+plot(density(a))
 ```
 
