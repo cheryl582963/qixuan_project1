@@ -92,183 +92,53 @@ id=1:length(stype)
 finite_pop=as.data.frame(cbind(id,stype,enumeration,household,individual,x_1,x_2,x_3,x_4,x_5,z_1,z_2,z_3,z_4,z_5))
 
 set.seed(1)
-mean_strata_1_norm=rnorm(n_strata[1],2,0.5)
+strata_mean=rnorm(5,0,1)
 set.seed(1)
-mean_strata_1_bino=runif(n_strata[1],0,0.2)
-for(i in 1:n_strata[1]){
+strata_bino_mean=rtruncnorm(5,mean = 0.2,sd=0.1,a=0,b=0.3)
+
+i=1
+j=1
+for(j in 1:5){
+set.seed(j)
+mean_cluster=rnorm(n_strata[j],0,1)
+set.seed(j)
+mean_cluster_bino=rtruncnorm(n_strata[j],mean=0.2,sd=0.1,a=0,b=0.3)
+for(i in 1:n_strata[j]){
   set.seed(1)
-finite_pop[which(finite_pop$stype==1 & finite_pop$enumeration==i),]$x_1=round(rnorm(nrow(finite_pop[which(finite_pop$stype==1 & finite_pop$enumeration==i),]),mean_strata_1_norm[i],2),2)
+  mean_individual=rnorm(nrow(finite_pop[which(finite_pop$stype==j & finite_pop$enumeration==i),]),0,1)+mean_cluster[i]+strata_mean[j]
+  finite_pop[which(finite_pop$stype==j & finite_pop$enumeration==i),]$x_1=mean_individual
   set.seed(1)
-finite_pop[which(finite_pop$stype==1 &
-finite_pop$enumeration==i),]$z_1=rbinom(nrow(finite_pop[which(finite_pop$stype==1 & finite_pop$enumeration==i),]),size = 1, prob = mean_strata_1_bino[i])
-
+  p_individual=rtruncnorm(nrow(finite_pop[which(finite_pop$stype==j & finite_pop$enumeration==i),]),mean=0.2,sd=0.1,a=0,b=0.3)+strata_bino_mean[j]+mean_cluster_bino[i]
+  finite_pop[which(finite_pop$stype==j & finite_pop$enumeration==i),]$z_1=rbinom(nrow(finite_pop[which(finite_pop$stype==j & finite_pop$enumeration==i),]),size = 1,prob = p_individual)
+  
+    set.seed(2)
+  mean_individual=rnorm(nrow(finite_pop[which(finite_pop$stype==j & finite_pop$enumeration==i),]),0,1)+mean_cluster[i]+strata_mean[j]
+  finite_pop[which(finite_pop$stype==j & finite_pop$enumeration==i),]$x_2=mean_individual
   set.seed(2)
-finite_pop[which(finite_pop$stype==1 & finite_pop$enumeration==i),]$x_2=round(rnorm(nrow(finite_pop[which(finite_pop$stype==1 & finite_pop$enumeration==i),]),mean_strata_1_norm[i]+0.2,1),2)
-  set.seed(2)
-finite_pop[which(finite_pop$stype==1 &
-finite_pop$enumeration==i),]$z_2=rbinom(nrow(finite_pop[which(finite_pop$stype==1 & finite_pop$enumeration==i),]),size = 1, prob = mean_strata_1_bino[i]+0.02)
-
+  p_individual=rtruncnorm(nrow(finite_pop[which(finite_pop$stype==j & finite_pop$enumeration==i),]),mean=0.2,sd=0.1,a=0,b=0.3)+strata_bino_mean[j]+mean_cluster_bino[i]
+  finite_pop[which(finite_pop$stype==j & finite_pop$enumeration==i),]$z_2=rbinom(nrow(finite_pop[which(finite_pop$stype==j & finite_pop$enumeration==i),]),size = 1,prob = p_individual)
+  
+    set.seed(3)
+  mean_individual=rnorm(nrow(finite_pop[which(finite_pop$stype==j & finite_pop$enumeration==i),]),0,1)+mean_cluster[i]+strata_mean[j]
+  finite_pop[which(finite_pop$stype==j & finite_pop$enumeration==i),]$x_3=mean_individual
   set.seed(3)
-finite_pop[which(finite_pop$stype==1 & finite_pop$enumeration==i),]$x_3=round(rnorm(nrow(finite_pop[which(finite_pop$stype==1 & finite_pop$enumeration==i),]),mean_strata_1_norm[i]+0.4,3),1)
-  set.seed(3)
-finite_pop[which(finite_pop$stype==1 & 
-finite_pop$enumeration==i),]$z_3=rbinom(nrow(finite_pop[which(finite_pop$stype==1 & finite_pop$enumeration==i),]),size = 1, prob = mean_strata_1_bino[i]+0.04)
-
+  p_individual=rtruncnorm(nrow(finite_pop[which(finite_pop$stype==j & finite_pop$enumeration==i),]),mean=0.2,sd=0.1,a=0,b=0.3)+strata_bino_mean[j]+mean_cluster_bino[i]
+  finite_pop[which(finite_pop$stype==j & finite_pop$enumeration==i),]$z_3=rbinom(nrow(finite_pop[which(finite_pop$stype==j & finite_pop$enumeration==i),]),size = 1,prob = p_individual)
+  
+    set.seed(4)
+  mean_individual=rnorm(nrow(finite_pop[which(finite_pop$stype==j & finite_pop$enumeration==i),]),0,1)+mean_cluster[i]+strata_mean[j]
+  finite_pop[which(finite_pop$stype==j & finite_pop$enumeration==i),]$x_4=mean_individual
   set.seed(4)
-finite_pop[which(finite_pop$stype==1 & finite_pop$enumeration==i),]$x_4=round(rnorm(nrow(finite_pop[which(finite_pop$stype==1 & finite_pop$enumeration==i),]),mean_strata_1_norm[i]+0.6,4),1)
-  set.seed(4)
-finite_pop[which(finite_pop$stype==1 & 
-finite_pop$enumeration==i),]$z_4=rbinom(nrow(finite_pop[which(finite_pop$stype==1 & finite_pop$enumeration==i),]),size = 1, prob = mean_strata_1_bino[i]+0.06)
-
+  p_individual=rtruncnorm(nrow(finite_pop[which(finite_pop$stype==j & finite_pop$enumeration==i),]),mean=0.2,sd=0.1,a=0,b=0.3)+strata_bino_mean[j]+mean_cluster_bino[i]
+  finite_pop[which(finite_pop$stype==j & finite_pop$enumeration==i),]$z_4=rbinom(nrow(finite_pop[which(finite_pop$stype==j & finite_pop$enumeration==i),]),size = 1,prob = p_individual)
+  
+    set.seed(5)
+  mean_individual=rnorm(nrow(finite_pop[which(finite_pop$stype==j & finite_pop$enumeration==i),]),0,1)+mean_cluster[i]+strata_mean[j]
+  finite_pop[which(finite_pop$stype==j & finite_pop$enumeration==i),]$x_5=mean_individual
   set.seed(5)
-finite_pop[which(finite_pop$stype==1 & finite_pop$enumeration==i),]$x_5=round(rnorm(nrow(finite_pop[which(finite_pop$stype==1 & finite_pop$enumeration==i),]),mean_strata_1_norm[i]+0.8,5),1)
-  set.seed(5)
-finite_pop[which(finite_pop$stype==1 & 
-finite_pop$enumeration==i),]$z_5=rbinom(nrow(finite_pop[which(finite_pop$stype==1 & finite_pop$enumeration==i),]),size = 1, prob = mean_strata_1_bino[i]+0.08)
+  p_individual=rtruncnorm(nrow(finite_pop[which(finite_pop$stype==j & finite_pop$enumeration==i),]),mean=0.2,sd=0.1,a=0,b=0.3)+strata_bino_mean[j]+mean_cluster_bino[i]
+  finite_pop[which(finite_pop$stype==j & finite_pop$enumeration==i),]$z_5=rbinom(nrow(finite_pop[which(finite_pop$stype==j & finite_pop$enumeration==i),]),size = 1,prob = p_individual)
 }
-
-set.seed(2)
-mean_strata_2_norm=rnorm(n_strata[2],4,1)
-set.seed(2)
-mean_strata_2_bino=runif(n_strata[2],0,0.4)
-for(i in 1:n_strata[2]){
-  set.seed(1)
-finite_pop[which(finite_pop$stype==2 & finite_pop$enumeration==i),]$x_1=round(rnorm(nrow(finite_pop[which(finite_pop$stype==2 & finite_pop$enumeration==i),]),mean_strata_2_norm[i],2),2)
-  set.seed(1)
-finite_pop[which(finite_pop$stype==2 & 
-finite_pop$enumeration==i),]$z_1=rbinom(nrow(finite_pop[which(finite_pop$stype==2 & finite_pop$enumeration==i),]),size = 1, prob = mean_strata_2_bino[i])
-
-  set.seed(2)
-finite_pop[which(finite_pop$stype==2 & finite_pop$enumeration==i),]$x_2=round(rnorm(nrow(finite_pop[which(finite_pop$stype==2 & finite_pop$enumeration==i),]),mean_strata_2_norm[i]+0.2,1),2)
-  set.seed(2)
-finite_pop[which(finite_pop$stype==2 &
-finite_pop$enumeration==i),]$z_2=rbinom(nrow(finite_pop[which(finite_pop$stype==2 & finite_pop$enumeration==i),]),size = 1, prob = mean_strata_2_bino[i]+0.02)
-
-  set.seed(3)
-finite_pop[which(finite_pop$stype==2 & finite_pop$enumeration==i),]$x_3=round(rnorm(nrow(finite_pop[which(finite_pop$stype==2 & finite_pop$enumeration==i),]),mean_strata_2_norm[i]+0.4,3),1)
-  set.seed(3)
-finite_pop[which(finite_pop$stype==2 & 
-finite_pop$enumeration==i),]$z_3=rbinom(nrow(finite_pop[which(finite_pop$stype==2 & finite_pop$enumeration==i),]),size = 1, prob = mean_strata_2_bino[i]+0.04)
-
-  set.seed(4)
-finite_pop[which(finite_pop$stype==2 & finite_pop$enumeration==i),]$x_4=round(rnorm(nrow(finite_pop[which(finite_pop$stype==2 & finite_pop$enumeration==i),]),mean_strata_2_norm[i]+0.6,4),1)
-  set.seed(4)
-finite_pop[which(finite_pop$stype==2 & 
-finite_pop$enumeration==i),]$z_4=rbinom(nrow(finite_pop[which(finite_pop$stype==2 & finite_pop$enumeration==i),]),size = 1, prob = mean_strata_2_bino[i]+0.06)
-
-  set.seed(5)
-finite_pop[which(finite_pop$stype==2 & finite_pop$enumeration==i),]$x_5=round(rnorm(nrow(finite_pop[which(finite_pop$stype==2 & finite_pop$enumeration==i),]),mean_strata_2_norm[i]+0.8,5),1)
-  set.seed(5)
-finite_pop[which(finite_pop$stype==2 & 
-finite_pop$enumeration==i),]$z_5=rbinom(nrow(finite_pop[which(finite_pop$stype==2 & finite_pop$enumeration==i),]),size = 1, prob = mean_strata_2_bino[i]+0.08)
-}
-
-set.seed(3)
-mean_strata_3_norm=rnorm(n_strata[3],6,2)
-set.seed(3)
-mean_strata_3_bino=runif(n_strata[3],0,0.6)
-for(i in 1:n_strata[3]){
-  set.seed(1)
-finite_pop[which(finite_pop$stype==3 & finite_pop$enumeration==i),]$x_1=round(rnorm(nrow(finite_pop[which(finite_pop$stype==3 & finite_pop$enumeration==i),]),mean_strata_3_norm[i],2),2)
-  set.seed(1)
-finite_pop[which(finite_pop$stype==3 &
-finite_pop$enumeration==i),]$z_1=rbinom(nrow(finite_pop[which(finite_pop$stype==3 & finite_pop$enumeration==i),]),size = 1, prob = mean_strata_3_bino[i])
-
-  set.seed(2)
-finite_pop[which(finite_pop$stype==3 & finite_pop$enumeration==i),]$x_2=round(rnorm(nrow(finite_pop[which(finite_pop$stype==3 & finite_pop$enumeration==i),]),mean_strata_3_norm[i]+0.2,1),2)
-  set.seed(2)
-finite_pop[which(finite_pop$stype==3 &
-finite_pop$enumeration==i),]$z_2=rbinom(nrow(finite_pop[which(finite_pop$stype==3 & finite_pop$enumeration==i),]),size = 1, prob = mean_strata_3_bino[i]+0.02)
-
-  set.seed(3)
-finite_pop[which(finite_pop$stype==3 & finite_pop$enumeration==i),]$x_3=round(rnorm(nrow(finite_pop[which(finite_pop$stype==3 & finite_pop$enumeration==i),]),mean_strata_3_norm[i]+0.4,3),1)
-  set.seed(3)
-finite_pop[which(finite_pop$stype==3 &
-finite_pop$enumeration==i),]$z_3=rbinom(nrow(finite_pop[which(finite_pop$stype==3 & finite_pop$enumeration==i),]),size = 1, prob = mean_strata_3_bino[i]+0.04)
-
-  set.seed(4)
-finite_pop[which(finite_pop$stype==3 & finite_pop$enumeration==i),]$x_4=round(rnorm(nrow(finite_pop[which(finite_pop$stype==3 & finite_pop$enumeration==i),]),mean_strata_3_norm[i]+0.6,4),1)
-  set.seed(4)
-finite_pop[which(finite_pop$stype==3 & 
-finite_pop$enumeration==i),]$z_4=rbinom(nrow(finite_pop[which(finite_pop$stype==3 & finite_pop$enumeration==i),]),size = 1, prob = mean_strata_3_bino[i]+0.06)
-
-  set.seed(5)
-finite_pop[which(finite_pop$stype==3 & finite_pop$enumeration==i),]$x_5=round(rnorm(nrow(finite_pop[which(finite_pop$stype==3 & finite_pop$enumeration==i),]),mean_strata_3_norm[i]+0.8,5),1)
-  set.seed(5)
-finite_pop[which(finite_pop$stype==3 & 
-finite_pop$enumeration==i),]$z_5=rbinom(nrow(finite_pop[which(finite_pop$stype==3 & finite_pop$enumeration==i),]),size = 1, prob = mean_strata_3_bino[i]+0.08)
-}
-
-set.seed(4)
-mean_strata_4_norm=rnorm(n_strata[4],7,2)
-set.seed(4)
-mean_strata_4_bino=runif(n_strata[4],0,0.8)
-for(i in 1:n_strata[4]){
-  set.seed(1)
-finite_pop[which(finite_pop$stype==4 & finite_pop$enumeration==i),]$x_1=round(rnorm(nrow(finite_pop[which(finite_pop$stype==4 & finite_pop$enumeration==i),]),mean_strata_4_norm[i],2),2)
-  set.seed(1)
-finite_pop[which(finite_pop$stype==4 & 
-finite_pop$enumeration==i),]$z_1=rbinom(nrow(finite_pop[which(finite_pop$stype==4 & finite_pop$enumeration==i),]),size = 1, prob = mean_strata_4_bino[i])
-
-  set.seed(2)
-finite_pop[which(finite_pop$stype==4 & finite_pop$enumeration==i),]$x_2=round(rnorm(nrow(finite_pop[which(finite_pop$stype==4 & finite_pop$enumeration==i),]),mean_strata_4_norm[i]+0.2,1),2)
-  set.seed(2)
-finite_pop[which(finite_pop$stype==4 &
-finite_pop$enumeration==i),]$z_2=rbinom(nrow(finite_pop[which(finite_pop$stype==4 & finite_pop$enumeration==i),]),size = 1, prob = mean_strata_4_bino[i]+0.02)
-
-  set.seed(3)
-finite_pop[which(finite_pop$stype==4 & finite_pop$enumeration==i),]$x_3=round(rnorm(nrow(finite_pop[which(finite_pop$stype==4 & finite_pop$enumeration==i),]),mean_strata_4_norm[i]+0.4,3),1)
-  set.seed(3)
-finite_pop[which(finite_pop$stype==4 & 
-finite_pop$enumeration==i),]$z_3=rbinom(nrow(finite_pop[which(finite_pop$stype==4 & finite_pop$enumeration==i),]),size = 1, prob = mean_strata_4_bino[i]+0.04)
-
-  set.seed(4)
-finite_pop[which(finite_pop$stype==4 & finite_pop$enumeration==i),]$x_4=round(rnorm(nrow(finite_pop[which(finite_pop$stype==4 & finite_pop$enumeration==i),]),mean_strata_4_norm[i]+0.6,4),1)
-  set.seed(4)
-finite_pop[which(finite_pop$stype==4 & 
-finite_pop$enumeration==i),]$z_4=rbinom(nrow(finite_pop[which(finite_pop$stype==4 & finite_pop$enumeration==i),]),size = 1, prob = mean_strata_4_bino[i]+0.06)
-
-  set.seed(5)
-finite_pop[which(finite_pop$stype==4 & finite_pop$enumeration==i),]$x_5=round(rnorm(nrow(finite_pop[which(finite_pop$stype==4 & finite_pop$enumeration==i),]),mean_strata_4_norm[i]+0.8,5),1)
-  set.seed(5)
-finite_pop[which(finite_pop$stype==4 & 
-finite_pop$enumeration==i),]$z_5=rbinom(nrow(finite_pop[which(finite_pop$stype==4 & finite_pop$enumeration==i),]),size = 1, prob = mean_strata_4_bino[i]+0.08)
-}
-
-set.seed(5)
-mean_strata_5_norm=rnorm(n_strata[5],9,2)
-set.seed(5)
-mean_strata_5_bino=runif(n_strata[5],0,0.9)
-for(i in 1:n_strata[5]){
-  set.seed(1)
-finite_pop[which(finite_pop$stype==5 & finite_pop$enumeration==i),]$x_1=round(rnorm(nrow(finite_pop[which(finite_pop$stype==5 & finite_pop$enumeration==i),]),mean_strata_5_norm[i],2),2)
-  set.seed(1)
-finite_pop[which(finite_pop$stype==5 & 
-finite_pop$enumeration==i),]$z_1=rbinom(nrow(finite_pop[which(finite_pop$stype==5 & finite_pop$enumeration==i),]),size = 1, prob = mean_strata_5_bino[i])
-
-  set.seed(2)
-finite_pop[which(finite_pop$stype==5 & finite_pop$enumeration==i),]$x_2=round(rnorm(nrow(finite_pop[which(finite_pop$stype==5 & finite_pop$enumeration==i),]),mean_strata_5_norm[i]+0.2,1),2)
-  set.seed(2)
-finite_pop[which(finite_pop$stype==5 & 
-finite_pop$enumeration==i),]$z_2=rbinom(nrow(finite_pop[which(finite_pop$stype==5 & finite_pop$enumeration==i),]),size = 1, prob = mean_strata_5_bino[i]+0.02)
-
-  set.seed(3)
-finite_pop[which(finite_pop$stype==5 & finite_pop$enumeration==i),]$x_3=round(rnorm(nrow(finite_pop[which(finite_pop$stype==5 & finite_pop$enumeration==i),]),mean_strata_5_norm[i]+0.4,3),1)
-  set.seed(3)
-finite_pop[which(finite_pop$stype==5 & 
-finite_pop$enumeration==i),]$z_3=rbinom(nrow(finite_pop[which(finite_pop$stype==5 & finite_pop$enumeration==i),]),size = 1, prob = mean_strata_5_bino[i]+0.04)
-
-  set.seed(4)
-finite_pop[which(finite_pop$stype==5 & finite_pop$enumeration==i),]$x_4=round(rnorm(nrow(finite_pop[which(finite_pop$stype==5 & finite_pop$enumeration==i),]),mean_strata_5_norm[i]+0.6,4),1)
-  set.seed(4)
-finite_pop[which(finite_pop$stype==5 & 
-finite_pop$enumeration==i),]$z_4=rbinom(nrow(finite_pop[which(finite_pop$stype==5 & finite_pop$enumeration==i),]),size = 1, prob = mean_strata_5_bino[i]+0.06)
-
-  set.seed(5)
-finite_pop[which(finite_pop$stype==5 & finite_pop$enumeration==i),]$x_5=round(rnorm(nrow(finite_pop[which(finite_pop$stype==5 & finite_pop$enumeration==i),]),mean_strata_5_norm[i]+0.8,5),1)
-  set.seed(5)
-finite_pop[which(finite_pop$stype==5 & 
-finite_pop$enumeration==i),]$z_5=rbinom(nrow(finite_pop[which(finite_pop$stype==5 & finite_pop$enumeration==i),]),size = 1, prob = mean_strata_5_bino[i]+0.08)
 }
 
 i=1
@@ -321,8 +191,27 @@ finite_pop=finite_pop %>%
 
 sum(finite_pop$y)/length(stype)
 
+strata_1_num_house=sum(number_of_household[1:200])
+strata_2_num_house=sum(number_of_household[201:350])
+strata_3_num_house=sum(number_of_household[351:450])
+strata_4_num_house=sum(number_of_household[451:500])
+strata_5_num_house=sum(number_of_household[501:525])
+strata_num_house=list(
+  strata_1_num_house,strata_2_num_house,strata_3_num_house,strata_4_num_house,strata_5_num_house
+)
 
-write.csv(finite_pop,"finite_pop")
+finite_pop$weight_sub=rep(NA,nrow(finite_pop))
+n=c(50,30,20,15,10)
+
+i=1
+for(i in 1:5){
+  finite_pop[which(stype==i),]$weight_sub=1/((finite_pop[which(stype==i),]$num_house*n[i]/strata_num_house[[i]])*(20/finite_pop[which(stype==i),]$num_house)*(1/2))
+  print(i)
+}
+
+finite_pop$weight=finite_pop$weight_sub/2
+
+write.csv(finite_pop,"finite_pop.csv")
 ```
 
 ## Do a sampling to select a survey sample
@@ -331,7 +220,7 @@ write.csv(finite_pop,"finite_pop")
 ## select mh EAs  from  each  stratum
 sizes=number_of_household
 strat=c(rep(1,n_strata[1]),rep(2,n_strata[2]),rep(3,n_strata[3]),rep(4,n_strata[4]),rep(5,n_strata[5]))
-n=c(50,30,20,15,10)
+
 set.seed(1)
 selected_ea=ppssstrat(sizes,strat,n)
 ##for stype1
@@ -384,7 +273,7 @@ selected_data_3=inner_join(selected_data_2,data_2,by=c("stype","enumeration","ho
 
 selected_data_4=selected_data_3 %>% 
   mutate(
-    z_2=3-0.8*x_1+3.8*x_3+3*x_5+2.3*z_3-0.5*z_5-3*z_4,
+    z_2=11-4.8*x_1+8.2*x_3-4.8*x_5+5.3*z_3-0.5*z_5-0.3*z_4,
     pr_2=(1/(1+exp(-z_2)))*response_household,
     response_indiv= rbinom(nrow(selected_data_3),1,pr_2) 
   )
@@ -393,9 +282,12 @@ nrow(selected_data_4[which(selected_data_4$response_household==1 & selected_data
 
 selected_data_4[which(selected_data_4$response_indiv==0 | selected_data_4$response_household==0),25]=NA
 
-
-
-write.csv(selected_data_4,"selected_data")
+selected_data_4=drop_na(selected_data_4)
+finite_pop[which(finite_pop$stype==1 & finite_pop$enumeration==198),]
+selected_data_4[which(selected_data_4$stype==1 & selected_data_4$enumeration==198),]
+unique(selected_data_4[,2:3])
+write.csv(selected_data_4,"selected_data.csv")
+save(selected_data_4, file="selected_data.rda")
 ```
 
 ##Select a sub-cohort from the sample
@@ -439,17 +331,20 @@ data_6=inner_join(data_3[,-(27:30)],data_5,by = c("stype", "enumeration", "house
 
 data_7=data_6 %>% 
   mutate(
-    z_2=3+2.1*x_3+2.2*x_2+3.1*x_4-2.3*z_1-1.2*z_2-2*z_4,
+    z_2=1-1.1*x_3-1.2*x_2+3.1*x_4+1.3*z_1+1.2*z_2-2*z_4,
     pr_2=(1/(1+exp(-z_2)))*response_household,
     response_indiv= rbinom(nrow(data_6),1,pr_2) 
   )
 
-data_7[which(data_7$response_indiv==0 | data_7$response_household==0),25]=NA
+nrow(data_7[which(data_7$response_household==1 & data_7$response_indiv==1),])/nrow(data_7[which(data_7$response_household==1),])
 
-write.csv(data_7,"selected_sub_cohort")
+data_7[which(data_7$response_indiv==0 | data_7$response_household==0),25]=NA
+data_7=drop_na(data_7)
+write.csv(data_7,"selected_sub_cohort.csv")
+save(data_7, file="selected_sub_data.rda")
 ```
 
-## vusulaization
+## visulaization
 
 ```{r}
 i=1
@@ -503,5 +398,11 @@ for (i in 1:strata) {
 }
 
 plot(density(a))
+```
+
+## calculate the weight
+
+```{r}
+
 ```
 

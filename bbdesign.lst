@@ -1,0 +1,32 @@
+SRCware BBDesign, Tue Aug 18 10:07:02 2020                                       1
+
+BBDESIGN from cohort to population
+
+Setup listing:
+
+title BBDESIGN from cohort to population;
+datain cohort_house;
+dataout Synthesized_population;
+stratum stype;
+cluster enumeration;
+weight weight;
+popsize 4000;
+csamples 15;
+wsamples 15;
+id id;
+var stype enumeration household;
+seed 1;
+run;
+SRCware BBDesign, Tue Aug 18 10:07:03 2020                                       1
+
+BBDESIGN from cohort to population
+
+Results:
+
+Variables                5
+Observations          1964
+Strata                   5
+Clusters               125
+Cluster samples         15
+Weight samples          15
+Syn pop size          4000

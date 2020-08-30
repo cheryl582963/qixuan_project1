@@ -1,0 +1,8 @@
+standard;
+variables
+  name=stype type=num width=8;
+  name=enumeration;
+  name=household;
+  name=weight;
+  name=response;
+  name=id;

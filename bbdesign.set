@@ -1,0 +1,13 @@
+title BBDESIGN from cohort to population;
+datain cohort_house;
+dataout Synthesized_population;
+stratum stype;
+cluster enumeration;
+weight weight;
+popsize 4000;
+csamples 15;
+wsamples 15;
+id id;
+var stype enumeration household;
+seed 1;
+run;
